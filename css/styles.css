@@ -1,0 +1,225 @@
+/* ============================================================
+   GOKOCO — Estilos da página de oferta
+   Consolidado a partir dos blocos <style> inline do site.html
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. Correção de zoom em inputs (iOS/Safari)
+   ------------------------------------------------------------ */
+
+input,select,textarea{font-size:16px !important;}
+@supports(-webkit-touch-callout:none){input,select,textarea{font-size:16px !important;}
+}
+
+
+
+/* ------------------------------------------------------------
+   2. Badges de promoção (Promo / Somente hoje) e contador de estoque
+   ------------------------------------------------------------ */
+
+.lv-promo-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+.lv-promo-date,.lv-today{position:relative;overflow:hidden;isolation:isolate;color:#fff;font-weight:800;letter-spacing:.04em;border-radius:10px;padding:7px 12px;box-shadow:0 7px 18px -8px rgba(255,34,85,.72);transition:transform .22s ease,box-shadow .22s ease}
+
+.lv-promo-date{background:linear-gradient(105deg,#ff7900 0%,#ff3b30 52%,#ff0f55 100%)}
+
+.lv-today{background:linear-gradient(105deg,#ff4775 0%,#ce003e 100%);animation:lvTodayPulse 2.8s ease-in-out infinite;will-change:transform}
+
+.lv-promo-date::after,.lv-today::after{content:"";position:absolute;top:0;left:-65%;width:42%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);animation:lvTodayShine 4s ease-in-out infinite}
+
+.lv-today::after{animation-delay:.45s}
+
+.lv-promo-icon,.lv-today-icon{position:relative;z-index:1;width:15px;height:15px;flex:none}
+
+.lv-today-txt,.lv-promo-txt{position:relative;z-index:1;white-space:nowrap}
+
+@keyframes lvTodayPulse{0%,100%{transform:translateY(0);box-shadow:0 7px 18px -8px rgba(255,34,85,.72)}
+50%{transform:translateY(-1px);box-shadow:0 10px 24px -8px rgba(255,34,85,.9)}
+}
+
+@keyframes lvTodayShine{0%,60%{left:-65%}
+82%,100%{left:130%}
+}
+
+@media (hover:hover){.lv-promo-date:hover,.lv-today:hover{transform:translateY(-2px);box-shadow:0 12px 26px -8px rgba(255,34,85,.9)}
+}
+
+.lv-stock-alert{transition:box-shadow .35s ease,background-color .35s ease,transform .35s ease}
+
+.lv-stock-number{display:inline-block;min-width:2ch;text-align:center;font-variant-numeric:tabular-nums;transform-origin:center}
+
+.lv-stock-alert.is-updating{background-color:rgba(254,226,226,.96);box-shadow:0 5px 16px -10px rgba(220,38,38,.9);transform:translateY(-1px)}
+
+.lv-stock-alert.is-updating .lv-stock-number{animation:lvStockDrop .58s cubic-bezier(.22,1,.36,1)}
+
+@keyframes lvStockDrop{0%{opacity:1;transform:translateY(0) scale(1)}
+42%{opacity:0;transform:translateY(6px) scale(.88)}
+43%{opacity:0;transform:translateY(-6px) scale(.88)}
+100%{opacity:1;transform:translateY(0) scale(1)}
+}
+
+@media (prefers-reduced-motion:reduce){.lv-today,.lv-promo-date::after,.lv-today::after,.lv-stock-alert.is-updating .lv-stock-number{animation:none}
+.lv-stock-alert{transition:none}
+}
+
+
+
+/* ------------------------------------------------------------
+   3. Overlay de bônus (resgate R$5)
+   ------------------------------------------------------------ */
+
+#lv-bonus-overlay{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(17,24,39,.58);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;transition:opacity .28s ease}
+
+#lv-bonus-overlay.is-open{display:flex;opacity:1}
+
+.lv-bonus-modal{position:relative;width:min(100%,390px);overflow:hidden;border-radius:20px;background:#fff;padding:28px 22px 20px;text-align:center;box-shadow:0 26px 70px rgba(0,0,0,.3);transform:translateY(18px) scale(.96);transition:transform .38s cubic-bezier(.22,1,.36,1)}
+
+#lv-bonus-overlay.is-open .lv-bonus-modal{transform:translateY(0) scale(1)}
+
+.lv-bonus-art{position:relative;width:112px;height:86px;margin:0 auto 18px;display:flex;align-items:center;justify-content:center}
+
+.lv-bonus-art::before{content:"";position:absolute;width:82px;height:82px;border-radius:50%;background:#fff5c4;animation:lvBonusGlow 2.4s ease-in-out infinite}
+
+.lv-bonus-ticket{position:relative;width:78px;height:50px;border-radius:11px;background:linear-gradient(145deg,#ffe35b,#ffb800);box-shadow:0 10px 22px rgba(245,158,11,.32);transform:rotate(-9deg);display:flex;align-items:center;justify-content:center;color:#8a5700;font-size:23px;font-weight:900}
+
+.lv-bonus-ticket::before,.lv-bonus-ticket::after{content:"";position:absolute;left:7px;right:7px;height:100%;border-radius:10px;background:#ffc928;z-index:-1}
+
+.lv-bonus-ticket::before{top:6px}
+.lv-bonus-ticket::after{top:12px;background:#ffb915}
+
+.lv-bonus-spark{position:absolute;width:8px;height:8px;border-radius:2px;background:#ffc62d;animation:lvBonusFloat 2.2s ease-in-out infinite}
+
+.lv-bonus-spark.s1{left:6px;top:14px;transform:rotate(25deg)}
+.lv-bonus-spark.s2{right:6px;top:23px;animation-delay:.45s}
+.lv-bonus-spark.s3{right:28px;top:1px;width:6px;height:6px;animation-delay:.8s}
+
+.lv-bonus-title{margin:0;color:#171717;font-size:24px;line-height:1.22;font-weight:800;letter-spacing:0}
+
+.lv-bonus-title strong{color:#c88900}
+
+.lv-bonus-sub{margin:10px auto 20px;max-width:280px;color:#666;font-size:13px;line-height:1.45}
+
+#lv-bonus-claim{position:relative;width:100%;height:54px;border:0;border-radius:12px;overflow:hidden;background:linear-gradient(100deg,#ffd43b,#ffb718);color:#171717;font-size:17px;font-weight:800;cursor:pointer;box-shadow:0 10px 24px -12px rgba(217,143,0,.9);transition:transform .16s ease,box-shadow .16s ease}
+
+#lv-bonus-claim::after{content:"";position:absolute;inset:0 auto 0 -45%;width:30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-20deg);animation:lvBonusShine 2.2s ease-in-out infinite}
+
+#lv-bonus-claim:active{transform:scale(.98)}
+#lv-bonus-claim:disabled{cursor:not-allowed;background:#e5e7eb;color:#8a8a8a;box-shadow:none}
+
+#lv-bonus-claim:disabled::after{display:none}
+.lv-bonus-count{display:inline-block;min-width:1ch;font-variant-numeric:tabular-nums}
+
+#lv-bonus-decline{margin-top:15px;border:0;background:transparent;color:#737373;font-size:15px;font-weight:600;cursor:pointer;padding:7px 14px}
+
+@keyframes lvBonusGlow{50%{transform:scale(1.1);opacity:.75}
+}
+@keyframes lvBonusFloat{50%{transform:translateY(-6px) rotate(35deg)}
+}
+@keyframes lvBonusShine{0%,55%{left:-45%}
+85%,100%{left:125%}
+}
+
+@media (prefers-reduced-motion:reduce){#lv-bonus-overlay,.lv-bonus-modal{transition:none}
+.lv-bonus-art::before,.lv-bonus-spark,#lv-bonus-claim::after{animation:none}
+}
+
+
+/*
+
+
+/* ------------------------------------------------------------
+   4. Modal de entrega (Full TikTok Shop)
+   ------------------------------------------------------------ */
+
+/* : isolated above page media and support. */
+:root{--lv-full-ink:var(--pann-fg);--lv-full-paper:var(--pann-bg,#fff);--lv-full-backdrop:rgba(15,23,42,.55);--lv-full-cyan:#22d3ee;--lv-full-blue:#3488f5;--lv-full-pink:#d852a2;--lv-full-mint:#e5f6ef;--lv-full-green:#0a9d5c;--lv-full-line:#e2e8f0;--lv-full-soft:#f8fafc;--lv-full-halo:rgba(216,82,162,.09)}
+
+#lv-ship-modal{z-index:2147483646;background:var(--lv-full-backdrop)!important;padding:16px;overflow-y:auto;overscroll-behavior:contain;backdrop-filter:blur(4px)}
+
+#lv-ship-modal>div{max-width:360px;max-height:calc(100dvh - 32px);overflow-y:auto;padding:24px 20px 20px;border-radius:26px;background:var(--lv-full-paper);color:var(--lv-full-ink)}
+
+#lv-ship-modal>div>span:first-of-type{width:72px;height:72px;background:linear-gradient(135deg,var(--lv-full-cyan),var(--lv-full-blue) 48%,var(--lv-full-pink))!important;box-shadow:0 0 0 12px var(--lv-full-halo);margin-top:8px;margin-bottom:22px}
+
+#lv-ship-modal h3{font-family:Montserrat,Inter,system-ui,sans-serif;font-size:20px;line-height:1.2;font-weight:800;letter-spacing:0;margin-top:0}
+
+#lv-ship-modal h3+div{margin-top:12px}
+
+#lv-ship-modal h3+div img{height:23px}
+
+#lv-ship-modal>div>span:nth-of-type(2){background:var(--lv-full-mint);color:var(--lv-full-green);border:1px solid var(--lv-full-line);border-radius:999px;letter-spacing:0;font-size:12px;margin-top:14px}
+
+#lv-ship-modal>div>p{font-size:13px;line-height:1.55;margin-top:14px}
+
+#lv-ship-modal>div>div:last-of-type{border:1px solid var(--lv-full-line);background:var(--lv-full-soft);border-radius:16px;padding:16px;margin-top:16px}
+
+#lv-ship-modal-ok{display:flex;align-items:center;justify-content:center;min-height:54px;height:54px;width:100%;padding:14px 10px;margin-top:18px;border-radius:18px;background:var(--lv-full-ink)!important;color:var(--lv-full-paper);font-size:15px;font-weight:800;line-height:1.3;letter-spacing:0;flex-shrink:0}
+
+body.lv-full-open #sup-btn,body.lv-full-open #sup-panel{visibility:hidden!important;pointer-events:none!important}
+
+@media(max-width:350px){#lv-ship-modal h3{font-size:17px}
+#lv-ship-modal-ok{font-size:13px}
+}
+
+
+
+/* ------------------------------------------------------------
+   5. Animações gerais (pulse / ping)
+   ------------------------------------------------------------ */
+
+@keyframes pann-pulse { 0%,100% {opacity:1}
+ 50% {opacity:0.4}
+ }
+ @keyframes pann-ping { 0%{transform:scale(1);opacity:.7}
+ 75%,100%{transform:scale(2.2);opacity:0}
+ }
+
+
+
+/* ------------------------------------------------------------
+   6. Carrossel de imagens
+   ------------------------------------------------------------ */
+
+#lv-carousel{scroll-behavior:smooth}
+
+.lv-arrow{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:9999px;background:rgba(255,255,255,.9);box-shadow:0 2px 8px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;z-index:10;border:none;cursor:pointer}
+
+.lv-arrow.prev{left:8px}
+.lv-arrow.next{right:8px}
+
+.lv-dots{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:6px;z-index:10}
+
+.lv-dot{width:6px;height:6px;border-radius:9999px;background:rgba(0,0,0,.25);transition:all .2s}
+
+.lv-dot.active{background:#111;width:16px}
+
+
+
+/* ------------------------------------------------------------
+   7. Modal de proteção do cliente
+   ------------------------------------------------------------ */
+
+#lv-prot{position:fixed;inset:0;z-index:120;display:none}
+
+#lv-prot.is-open{display:block}
+
+#lv-prot .lv-prot-bg{position:absolute;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(2px);opacity:0;transition:opacity .22s ease}
+
+#lv-prot.is-open .lv-prot-bg{opacity:1}
+
+#lv-prot .lv-prot-box{position:absolute;left:50%;top:50%;transform:translate(-50%,-46%) scale(.96);opacity:0;width:calc(100% - 32px);max-width:400px;background:#fff;border-radius:24px;padding:24px 20px 20px;box-shadow:0 24px 60px -12px rgba(15,23,42,.35);transition:transform .26s cubic-bezier(.2,.9,.3,1.1),opacity .22s ease;max-height:90vh;overflow:auto}
+
+#lv-prot.is-open .lv-prot-box{transform:translate(-50%,-50%) scale(1);opacity:1}
+
+#lv-prot .lv-prot-shield{width:66px;height:66px;border-radius:999px;display:flex;align-items:center;justify-content:center;margin:0 auto;background:linear-gradient(135deg,#34d399,#059669);box-shadow:0 0 0 8px rgba(16,185,129,.12),0 10px 24px -8px rgba(5,150,105,.55);animation:lvProtGlow 2.8s ease-in-out infinite}
+
+@keyframes lvProtGlow{0%,100%{box-shadow:0 0 0 8px rgba(16,185,129,.12),0 10px 24px -8px rgba(5,150,105,.5)}
+50%{box-shadow:0 0 0 14px rgba(16,185,129,.06),0 10px 28px -8px rgba(5,150,105,.65)}
+}
+
+#lv-prot .lv-prot-x{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:999px;background:#f1f5f9;color:#0f172a;display:flex;align-items:center;justify-content:center}
+
+#lv-prot .lv-prot-x:active{transform:scale(.94)}
+
+@media (prefers-reduced-motion:reduce){#lv-prot .lv-prot-shield{animation:none}
+}
+
